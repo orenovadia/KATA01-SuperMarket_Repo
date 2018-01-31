@@ -39,6 +39,35 @@ from supermarket.super_market import Inventory
 from supermarket.super_market import Product
 from supermarket.super_market import Cart
 
+# because Cart and Inventory are so much alike, You had to copy their code, which is almost completely identical 
+# accept for naming. But here you also had to duplicate the tests for it.
+# I suggest this Design for both of them:
+
+class ProductCollection(object):
+    def __init__(self):
+        self.products = {}
+    def add_product(self, product, amount):
+        pass 
+        # ...
+
+
+class ShoppingCart(ProductCollection):
+    pass
+
+
+class Inventory(ProductCollection):
+    pass
+
+# Then, You only need to test product collection
+# Another alternative is to not even define the class Cart, but rather instantiate ProductCollection:
+# cart = ProductCollection()
+# inventory = ProductCollection()
+# This would work as long as both cart and inventory don't have their own seperate logic. Then you need to subclass
+# Product collection for both of them and extend it. For example:
+
+class ShoppingCart(ProductCollection):
+    def calculate_price(self):
+        return sum(p.full_price * amount for p, amount in self.products.iteritems())
 
 class TestShoppingCart(unittest.TestCase):
 
