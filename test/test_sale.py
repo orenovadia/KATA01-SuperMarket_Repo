@@ -11,6 +11,7 @@ class TestXPercentOff(unittest.TestCase):
         product3 = Product(76768, 'Drinks & Alkohol', 'wain', 55.50, 'bottles')
 
         cart = Cart()
+        # Why do you need all the products in here? 1 is enough no? 2 tops
         cart.add_product(product1, 2)
         cart.add_product(product2, 3)
         cart.add_product(product3, 6)
@@ -34,6 +35,9 @@ class TestOnePlusOne(unittest.TestCase):
 
         pay_for_products = OnePlusOne(product1, product3)
         pay_for_products2 = OnePlusOne(product1, product2)
+        # You didn't test the following:
+        # buy 1 get 1 fot the same product
+        # One of the products or two of the products are not in the cart at all, and about that, you need to decide whether it is legal for someone to do it, and then you return 0, or the price of the products or whatever, or it is illegal, then you raise an error
 
         self.assertEqual(pay_for_products.payment(cart), 247)
         self.assertEqual(pay_for_products2.payment(cart), 25.0)
