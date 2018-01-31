@@ -98,10 +98,11 @@ class Cart(object):
         if product in self.products and self.products[product] >= quantity:
             self.products[product] -= quantity
 
-        if self.products[product] < quantity:
-            print 'you tried to remove %d more %s than in cart.' \
+        if self.products[product] < quantity: # if product not in self.products you will get a KeyError here
+            # This is one way to deal with unexpected behaviour, you raise an error if someone used your object in a way he shouldnt have
+            raise ValueError('you tried to remove %d more %s than in cart.' \
                   ' you removed all.' % (quantity - self.products[product],
-                                         product.name)
+                                         product.name))
             self.products[product] = 0
             print ('This product is no longer in cart.')
 
